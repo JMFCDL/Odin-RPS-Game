@@ -84,7 +84,7 @@ function fullGame() {
     } else if (score_player < score_computer) {
         return `computer has won with ${score_computer} score versus player with ${score_player} score`;
     } else {
-        return `it's a tie between player and computer, they both got ${score_player}`;
+        return `a tie between player and computer, they both got ${score_player}`;
     }
 }
 
