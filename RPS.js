@@ -6,11 +6,11 @@ function getComputerChoice(min,max) {
     let random_int = Math.floor(Math.random() * (max-min+1)) + min; //getting random value between 1 to 3
     switch(random_int) { //setting value to either Rock, Paper, Scissors depending on random_int
         case 1:
-            return "Rock";
+            return "rock";
         case 2:
-            return "Paper";
+            return "paper";
         case 3:
-            return "Scissors"
+            return "scissor";
     }
 }
 
@@ -23,15 +23,47 @@ function getPlayerChoice(choice) {
     }
     switch(+num) { //need + to make sure num is a integer, instead of a string number like "1"
         case 1:
-            return "Rock";
+            return "rock";
         case 2:
-            return "Paper";
+            return "paper";
         case 3:
-            return "Scissors"
+            return "scissor";
+    }
+}
+
+function oneRound(playerSelection, computerSelection) {
+    if (playerSelection === "rock") {
+        if (computerSelection === "paper") {
+            return "paper beats rock, Computer has won";
+        } else if (computerSelection === "scissor") {
+            return "rock beats scissor, Player has won";
+        }
+    }
+
+    if (playerSelection === "paper") {
+        if (computerSelection === "rock") {
+            return "paper beats rock, Player has won";
+        } else if (computerSelection === "scissor") {
+            return "scissor beats paper, Computer has won";
+        }
+    }
+
+    if (playerSelection === "scissor") {
+        if (computerSelection === "paper") {
+            return "scissor beats paper, Player has won";
+        } else if (computerSelection === "rock") {
+            return "rock beats scissor, Computer has won";
+        }
+    }
+
+    if(playerSelection === computerSelection){
+        return `${playerSelection} and ${computerSelection} are the same, so it's a tie!`
     }
 }
 
 let computerSelection = getComputerChoice(min,max);
 let playerSelection = getPlayerChoice(choice);
-console.log(computerSelection)
-console.log(playerSelection)
+let result = oneRound(playerSelection, computerSelection)
+console.log("the computer chose " + computerSelection) //prints out computer choice
+console.log("the player chose " + playerSelection) //prints out player choice
+console.log(result) //result of the round one game
