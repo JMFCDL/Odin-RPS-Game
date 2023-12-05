@@ -1,10 +1,53 @@
-
 const min = 1;
 const max = 3;
 let score_computer = 0;
 let score_player = 0;
 let player_choice = "";
 let waitForBtnClickResolve;
+let round_counter = 1;
+
+const buttons = document.querySelector("#buttons");
+const rdybtn = document.querySelector("#ready");
+const container = document.querySelector("#container");
+
+const roundText = document.createElement("h1");
+roundText.setAttribute("id","roundtext");
+container.insertBefore(roundText, container.firstChild);
+
+const computerScoreText = document.createElement("div");
+computerScoreText.setAttribute("id","computer score");
+computerScoreText.textContent = `Computer score: ${score_computer}`; 
+container.append(computerScoreText);
+
+const playerScoreText = document.createElement("div");
+playerScoreText.setAttribute("id", "player score");
+playerScoreText.textContent = `Player score: ${score_player}`;
+container.append(playerScoreText);
+
+const computerChoiceText = document.createElement("div");
+computerChoiceText.setAttribute("id", "computer choice");
+computerChoiceText.textContent = "The computer chose nothing yet";
+container.insertBefore(computerChoiceText, computerScoreText);
+
+const playerChoiceText = document.createElement("div");
+playerChoiceText.setAttribute("id", "Player choice");
+playerChoiceText.textContent = "You chose nothing so far";
+container.insertBefore(playerChoiceText, computerScoreText);
+
+const resultText = document.createElement("h3");
+resultText.setAttribute("id", "result text");
+resultText.textContent = "The game hasn't started yet";
+container.insertBefore(resultText, computerScoreText);
+
+const gameFinishedText = document.createElement("h1");
+gameFinishedText.setAttribute("id", "game done");
+gameFinishedText.textContent = "The game isn't done yet";
+container.append(gameFinishedText);
+
+const PreviousRoundText = document.createElement("h2");
+PreviousRoundText.setAttribute("id", "Previous round");
+PreviousRoundText.textContent = "Previous Round Information";
+container.insertBefore(PreviousRoundText, computerChoiceText)
 
 function getComputerChoice(min,max) { 
     let random_int = Math.floor(Math.random() * (max-min+1)) + min; //getting random value between 1 to 3
@@ -17,9 +60,6 @@ function getComputerChoice(min,max) {
             return "scissors";
     }
 }
-
-let buttons = document.querySelector("#buttons");
-let rdybtn = document.querySelector("#ready");
 
 buttons.addEventListener("click", (event) => {
     let target = event.target; 
@@ -83,9 +123,9 @@ function oneRoundWinner(player_choice, computerSelection) { //who won based on c
 function oneRound() { 
     let computerSelection = getComputerChoice(min,max);
     let result = oneRoundWinner(player_choice, computerSelection);
-    console.log("the computer chose " + computerSelection); //prints out computer choice
-    console.log("the player chose " + player_choice); //prints out player choice
-    console.log(result); //result of the round one game
+    computerChoiceText.textContent = `The computer chose ${computerSelection}`;
+    playerChoiceText.textContent = `You chose ${player_choice}`;
+    resultText.textContent = `${result}`
     return result;
 }
 
@@ -100,10 +140,9 @@ function gameScore() {
 }
 
 async function fullGame() {
-    let round_counter = 1;
     rdybtn.addEventListener("click", btnResolver);
     while(round_counter <= 5) { //game is based on 5 rounds; changed to one round
-        console.log("Round " + round_counter);
+        roundText.textContent = `Round ${round_counter}`;
         await waitForBtnClick();
         let outcome = oneRound(); //one round
         if (outcome.includes("Computer has won")) { //adding scores to player or computer depending on string content of outcome
@@ -114,13 +153,13 @@ async function fullGame() {
             score_player += 1;
             score_computer += 1;
         }
-        console.log("Computer score is " + score_computer); //player sees current score after round is finished
-        console.log("Player score is " + score_player);
+        computerScoreText.textContent = `Computer score: ${score_computer}`;  //updates text for score on page
+        playerScoreText.textContent = `Player score: ${score_player}`;
         round_counter += 1; //increments round
     }
     rdybtn.removeEventListener("click", btnResolver);
     let gameFinished = gameScore();
-    console.log(gameFinished)
+    gameFinishedText.textContent = `${gameFinished}`;
 }
 
 fullGame();
