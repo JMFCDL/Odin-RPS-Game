@@ -12,8 +12,9 @@ const container = document.querySelector("#container");
 const playerimage = document.querySelector("#playerChoiceImg");
 const computerimage = document.querySelector("#computerChoiceImg");
 const images = document.querySelector("#images");
-const playerimg = document.querySelector("#playerimg");
-const computerimg = document.querySelector("#computerimg");
+const pastPlayerImg = document.querySelector("#pastPlayerImg");
+const computerImg = document.querySelector("#computerImg");
+const currentPlayerImg = document.querySelector("#currentPlayerImg")
 
 const roundText = document.createElement("h1");
 roundText.setAttribute("id","roundtext");
@@ -25,16 +26,10 @@ computerChoiceText.setAttribute("id", "computer choice");
 computerChoiceText.textContent = "The computer chose nothing yet";
 computerimage.appendChild(computerChoiceText);
 
-// const computerpic = document.getElementById("computerimg");
-// images.appendChild(computerpic);
-
 const playerChoiceText = document.createElement("div");
 playerChoiceText.setAttribute("id", "Player choice");
 playerChoiceText.textContent = "You chose nothing so far";
 playerimage.appendChild(playerChoiceText)
-
-// const playerpic = document.getElementById("playerimg");
-// images.appendChild(playerpic);
 
 const computerScoreText = document.createElement("div");
 computerScoreText.setAttribute("id","computer score");
@@ -61,6 +56,11 @@ PreviousRoundText.setAttribute("id", "Previous round");
 PreviousRoundText.textContent = "Previous Round Information";
 container.insertBefore(PreviousRoundText, images)
 
+const currentPlayerChoiceText = document.createElement("div");
+currentPlayerChoiceText.setAttribute("id", "current-choice");
+currentPlayerChoiceText.textContent = "You chose nothing yet";
+container.insertBefore(currentPlayerChoiceText, PreviousRoundText)
+
 
 document.getElementById("container").style.textAlign = "center";
 document.getElementById("images").style.justifyContent = "center";
@@ -69,19 +69,19 @@ function getComputerChoice(min,max) {
     let random_int = Math.floor(Math.random() * (max-min+1)) + min; //getting random value between 1 to 3
     switch(random_int) { //setting value to either Rock, Paper, Scissors depending on random_int
         case 1:
-            document.getElementById("computerimg").src = "images/rock-right.jpeg";
-            computerimg.style.height = "250px";
-            computerimg.style.width = "250px";
+            document.getElementById("computerImg").src = "images/rock-right.jpeg";
+            computerImg.style.height = "250px";
+            computerImg.style.width = "250px";
             return "rock";
         case 2:
-            document.getElementById("computerimg").src = "images/paper.jpeg";
-            computerimg.style.height = "250px";
-            computerimg.style.width = "250px";
+            document.getElementById("computerImg").src = "images/paper.jpeg";
+            computerImg.style.height = "250px";
+            computerImg.style.width = "250px";
             return "paper";
         case 3:
-            document.getElementById("computerimg").src = "images/scissors-right.jpeg";
-            computerimg.style.height = "250px";
-            computerimg.style.width = "250px";
+            document.getElementById("computerImg").src = "images/scissors-right.jpeg";
+            computerImg.style.height = "250px";
+            computerImg.style.width = "250px";
             return "scissors";
     }
 }
@@ -92,21 +92,24 @@ buttons.addEventListener("click", (event) => {
     switch(target.id) {
         case "rock":
             player_choice = "rock";
-            document.getElementById("playerimg").src = "images/rock-left.jpeg";
-            playerimg.style.height = "250px";
-            playerimg.style.width = "250px";
+            document.getElementById("currentPlayerImg").src = "images/rock-left.jpeg";
+            currentPlayerChoiceText.textContent = "Your choice is currently rock";
+            currentPlayerImg.style.height = "250px";
+            currentPlayerImg.style.width = "250px";
             break;
         case "paper":
             player_choice = "paper";
-            document.getElementById("playerimg").src = "images/paper.jpeg";
-            playerimg.style.height = "250px";
-            playerimg.style.width = "250px";
+            document.getElementById("currentPlayerImg").src = "images/paper.jpeg";
+            currentPlayerChoiceText.textContent = "Your choice is currently paper";
+            currentPlayerImg.style.height = "250px";
+            currentPlayerImg.style.width = "250px";
             break;
         case "scissors": 
             player_choice = "scissors";
-            document.getElementById("playerimg").src = "images/scissors-left.jpeg";
-            playerimg.style.height = "250px";
-            playerimg.style.width = "250px";
+            document.getElementById("currentPlayerImg").src = "images/scissors-left.jpeg";
+            currentPlayerChoiceText.textContent = "Your choice is currently scissors";
+            currentPlayerImg.style.height = "250px";
+            currentPlayerImg.style.width = "250px";
             break;
     }
 });
@@ -170,12 +173,28 @@ function gameScore() {
     }
 }
 
+function pastImg() {
+    if(player_choice === "rock") {
+        document.getElementById("pastPlayerImg").src = "images/rock-left.jpeg";
+        pastPlayerImg.style.height = "250px";
+        pastPlayerImg.style.width = "250px";
+    } else if (player_choice === "paper") {
+        document.getElementById("pastPlayerImg").src = "images/paper.jpeg";
+        pastPlayerImg.style.height = "250px";
+        pastPlayerImg.style.width = "250px";
+    } else if (player_choice === "scissors") {
+        document.getElementById("pastPlayerImg").src = "images/scissors-left.jpeg";
+        pastPlayerImg.style.height = "250px";
+        pastPlayerImg.style.width = "250px";
+    }
+}
 async function fullGame() {
     rdybtn.addEventListener("click", btnResolver);
     while(round_counter <= 5) { //game is based on 5 rounds; changed to one round
         roundText.textContent = `Round ${round_counter}`;
         await waitForBtnClick();
         let outcome = oneRound(); //one round
+        pastImg();
         if (outcome.includes("Computer has won")) { //adding scores to player or computer depending on string content of outcome
             score_computer += 1;
         } else if (outcome.includes("Player has won")) {
