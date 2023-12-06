@@ -1,3 +1,11 @@
 #images {
     display: flex;
 }
+
+#play-area {
+    display: flex;
+}
+
+#currentPlayerImg {
+    margin-top: 20px;
+}

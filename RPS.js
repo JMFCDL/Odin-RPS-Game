@@ -14,7 +14,9 @@ const computerimage = document.querySelector("#computerChoiceImg");
 const images = document.querySelector("#images");
 const pastPlayerImg = document.querySelector("#pastPlayerImg");
 const computerImg = document.querySelector("#computerImg");
-const currentPlayerImg = document.querySelector("#currentPlayerImg")
+const currentPlayerImg = document.querySelector("#currentPlayerImg");
+const current = document.querySelector("#current");
+const playarea = document.querySelector("#play-area");
 
 const roundText = document.createElement("h1");
 roundText.setAttribute("id","roundtext");
@@ -59,11 +61,12 @@ container.insertBefore(PreviousRoundText, images)
 const currentPlayerChoiceText = document.createElement("div");
 currentPlayerChoiceText.setAttribute("id", "current-choice");
 currentPlayerChoiceText.textContent = "You chose nothing yet";
-container.insertBefore(currentPlayerChoiceText, PreviousRoundText)
+current.insertBefore(currentPlayerChoiceText, currentPlayerImg)
 
 
 document.getElementById("container").style.textAlign = "center";
 document.getElementById("images").style.justifyContent = "center";
+document.getElementById("play-area").style.justifyContent = "center";
 
 function getComputerChoice(min,max) { 
     let random_int = Math.floor(Math.random() * (max-min+1)) + min; //getting random value between 1 to 3
