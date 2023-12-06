@@ -5,16 +5,24 @@
         <meta charset="UTF-8">
         <title>Rock Papper Scissors Game</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="rps-style.css">
     </head>
 
     <body>
         <div id="container">
-            <div id="images"></div>
             <div id="buttons">
                 <button id="rock">Rock</button>
                 <button id="paper">Paper</button>
                 <button id="scissors">Scissors</button>
                 <button id="ready">Ready to Play!</button>
+            </div>
+            <div id="images">
+                <div id="playerChoiceImg">
+                    <img id="playerimg" src="images/loading.png" alt="Loading" height="250" width="250">
+                </div>
+                <div id="computerChoiceImg">
+                    <img id="computerimg" src="images/loading.png" alt="Loading" height="250" width="250">
+                </div>
             </div>
         </div>
         <script src="RPS.js"></script>

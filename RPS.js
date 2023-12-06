@@ -9,10 +9,32 @@ let round_counter = 1;
 const buttons = document.querySelector("#buttons");
 const rdybtn = document.querySelector("#ready");
 const container = document.querySelector("#container");
+const playerimage = document.querySelector("#playerChoiceImg");
+const computerimage = document.querySelector("#computerChoiceImg");
+const images = document.querySelector("#images");
+const playerimg = document.querySelector("#playerimg");
+const computerimg = document.querySelector("#computerimg");
 
 const roundText = document.createElement("h1");
 roundText.setAttribute("id","roundtext");
+roundText.textContent = `Round ${round_counter}`;
 container.insertBefore(roundText, container.firstChild);
+
+const computerChoiceText = document.createElement("div");
+computerChoiceText.setAttribute("id", "computer choice");
+computerChoiceText.textContent = "The computer chose nothing yet";
+computerimage.appendChild(computerChoiceText);
+
+// const computerpic = document.getElementById("computerimg");
+// images.appendChild(computerpic);
+
+const playerChoiceText = document.createElement("div");
+playerChoiceText.setAttribute("id", "Player choice");
+playerChoiceText.textContent = "You chose nothing so far";
+playerimage.appendChild(playerChoiceText)
+
+// const playerpic = document.getElementById("playerimg");
+// images.appendChild(playerpic);
 
 const computerScoreText = document.createElement("div");
 computerScoreText.setAttribute("id","computer score");
@@ -23,16 +45,6 @@ const playerScoreText = document.createElement("div");
 playerScoreText.setAttribute("id", "player score");
 playerScoreText.textContent = `Player score: ${score_player}`;
 container.append(playerScoreText);
-
-const computerChoiceText = document.createElement("div");
-computerChoiceText.setAttribute("id", "computer choice");
-computerChoiceText.textContent = "The computer chose nothing yet";
-container.insertBefore(computerChoiceText, computerScoreText);
-
-const playerChoiceText = document.createElement("div");
-playerChoiceText.setAttribute("id", "Player choice");
-playerChoiceText.textContent = "You chose nothing so far";
-container.insertBefore(playerChoiceText, computerScoreText);
 
 const resultText = document.createElement("h3");
 resultText.setAttribute("id", "result text");
@@ -47,16 +59,29 @@ container.append(gameFinishedText);
 const PreviousRoundText = document.createElement("h2");
 PreviousRoundText.setAttribute("id", "Previous round");
 PreviousRoundText.textContent = "Previous Round Information";
-container.insertBefore(PreviousRoundText, computerChoiceText)
+container.insertBefore(PreviousRoundText, images)
+
+
+document.getElementById("container").style.textAlign = "center";
+document.getElementById("images").style.justifyContent = "center";
 
 function getComputerChoice(min,max) { 
     let random_int = Math.floor(Math.random() * (max-min+1)) + min; //getting random value between 1 to 3
     switch(random_int) { //setting value to either Rock, Paper, Scissors depending on random_int
         case 1:
+            document.getElementById("computerimg").src = "images/rock-right.jpeg";
+            computerimg.style.height = "250px";
+            computerimg.style.width = "250px";
             return "rock";
         case 2:
+            document.getElementById("computerimg").src = "images/paper.jpeg";
+            computerimg.style.height = "250px";
+            computerimg.style.width = "250px";
             return "paper";
         case 3:
+            document.getElementById("computerimg").src = "images/scissors-right.jpeg";
+            computerimg.style.height = "250px";
+            computerimg.style.width = "250px";
             return "scissors";
     }
 }
@@ -67,15 +92,21 @@ buttons.addEventListener("click", (event) => {
     switch(target.id) {
         case "rock":
             player_choice = "rock";
-            check_button = true;
+            document.getElementById("playerimg").src = "images/rock-left.jpeg";
+            playerimg.style.height = "250px";
+            playerimg.style.width = "250px";
             break;
         case "paper":
             player_choice = "paper";
-            check_button = true;
+            document.getElementById("playerimg").src = "images/paper.jpeg";
+            playerimg.style.height = "250px";
+            playerimg.style.width = "250px";
             break;
         case "scissors": 
             player_choice = "scissors";
-            check_button = true;
+            document.getElementById("playerimg").src = "images/scissors-left.jpeg";
+            playerimg.style.height = "250px";
+            playerimg.style.width = "250px";
             break;
     }
 });
