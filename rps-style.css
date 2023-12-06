@@ -6,6 +6,10 @@
     display: flex;
 }
 
+#round-reset {
+    display: flex;
+}
+
 #currentPlayerImg {
     margin-top: 20px;
 }

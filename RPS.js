@@ -17,11 +17,13 @@ const computerImg = document.querySelector("#computerImg");
 const currentPlayerImg = document.querySelector("#currentPlayerImg");
 const current = document.querySelector("#current");
 const playarea = document.querySelector("#play-area");
+const roundReset = document.querySelector("#round-reset")
+const resetbtn = document.querySelector("#reset");
 
 const roundText = document.createElement("h1");
 roundText.setAttribute("id","roundtext");
 roundText.textContent = `Round ${round_counter}`;
-container.insertBefore(roundText, container.firstChild);
+roundReset.insertBefore(roundText, resetbtn);
 
 const computerChoiceText = document.createElement("div");
 computerChoiceText.setAttribute("id", "computer choice");
@@ -67,6 +69,7 @@ current.insertBefore(currentPlayerChoiceText, currentPlayerImg)
 document.getElementById("container").style.textAlign = "center";
 document.getElementById("images").style.justifyContent = "center";
 document.getElementById("play-area").style.justifyContent = "center";
+document.getElementById("round-reset").style.justifyContent = "space-around";
 
 function getComputerChoice(min,max) { 
     let random_int = Math.floor(Math.random() * (max-min+1)) + min; //getting random value between 1 to 3
@@ -116,6 +119,11 @@ buttons.addEventListener("click", (event) => {
             break;
     }
 });
+
+document.getElementById("reset").addEventListener("click", function() { //reloading web page
+    location.reload();
+    return false;
+}); 
 
 function waitForBtnClick() { 
     return new Promise(resolve => waitForBtnClickResolve = resolve);
