@@ -19,11 +19,13 @@ const current = document.querySelector("#current");
 const playarea = document.querySelector("#play-area");
 const roundReset = document.querySelector("#round-reset")
 const resetbtn = document.querySelector("#reset");
+const score = document.querySelector("#scores");
+const scorereset = document.querySelector("#score-reset")
 
 const roundText = document.createElement("h1");
 roundText.setAttribute("id","roundtext");
 roundText.textContent = `Round ${round_counter}`;
-roundReset.insertBefore(roundText, resetbtn);
+roundReset.insertBefore(roundText, scorereset);
 
 const computerChoiceText = document.createElement("div");
 computerChoiceText.setAttribute("id", "computer choice");
@@ -38,17 +40,17 @@ playerimage.appendChild(playerChoiceText)
 const computerScoreText = document.createElement("div");
 computerScoreText.setAttribute("id","computer score");
 computerScoreText.textContent = `Computer score: ${score_computer}`; 
-container.append(computerScoreText);
+score.append(computerScoreText);
 
 const playerScoreText = document.createElement("div");
 playerScoreText.setAttribute("id", "player score");
 playerScoreText.textContent = `Player score: ${score_player}`;
-container.append(playerScoreText);
+score.append(playerScoreText);
 
 const resultText = document.createElement("h3");
 resultText.setAttribute("id", "result text");
 resultText.textContent = "The game hasn't started yet";
-container.insertBefore(resultText, computerScoreText);
+container.appendChild(resultText);
 
 const gameFinishedText = document.createElement("h1");
 gameFinishedText.setAttribute("id", "game done");
@@ -201,7 +203,7 @@ function pastImg() {
 }
 async function fullGame() {
     rdybtn.addEventListener("click", btnResolver);
-    while(round_counter <= 5) { //game is based on 5 rounds; changed to one round
+    while(score_computer < 5 && score_player < 5) { //game is based on 5 rounds; changed to one round
         roundText.textContent = `Round ${round_counter}`;
         await waitForBtnClick();
         let outcome = oneRound(); //one round
